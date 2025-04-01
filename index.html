@@ -3,92 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home | Empower Ability Labs</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Empower Ability Labs - Home</title>
+    <link rel="stylesheet" href="EmpowerAbilityLab.css">
 </head>
 <body>
     <header>
-        <nav class="navbar">
-            <div class="logo">Empower Ability Labs</div>
+        <img src="images/logo.png" alt="Empower Ability Labs Logo" class="logo">
+        <nav aria-label="Main navigation">
             <ul>
-                <li><a href="#home" class="active" aria-label="Go to Home">Home</a></li>
-                <li><a href="#services" aria-label="Go to Services">Services</a></li>
-                <li><a href="#schedule" aria-label="Go to Schedule a Call">Schedule a call</a></li>
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#schedule" class="nav-link">Schedule a Call</a></li>
             </ul>
         </nav>
     </header>
-
     <main>
-        <section id="home" tabindex="-1">
-            <h2>Welcome to Empower Ability Labs</h2>
-            <p>We are dedicated to empowering individuals through accessible and inclusive events. Join our community to learn more about our services and initiatives.</p>
-            <div class="card-container">
-                <div class="card">
-                    <h3>Meet the Empower Community</h3>
-                    <p>Join our vibrant community of individuals and organizations committed to accessibility.</p>
-                    <button>Learn More</button>
+        <section id="home" class="content-section" aria-labelledby="home-heading">
+            <h1 id="home-heading">Welcome to Empower Ability Labs!</h1>
+            <p>Empower Ability Labs is a hub for learning and empathy-building...</p>
+            <img src="images/selfie.png" alt="Cartoon character taking a selfie to represent inclusive digital experiences" class="content-image">
+            <button id="community-btn">Meet the Empower Community!</button>
+            <div id="lightbox" role="dialog" aria-labelledby="lightbox-title" hidden>
+                <div class="lightbox-content">
+                    <h2 id="lightbox-title">Community Steering Committee</h2>
+                    <p>We get an aha! moments from product managers...</p>
+                    <ul>
+                        <li>McGill University</li>
+                        <li>Walmart.ca</li>
+                        <li>Apple.ca</li>
+                        <li>Google.ca</li>
+                        <li>Government of Canada</li>
+                    </ul>
+                    <button id="close-lightbox">Close</button>
                 </div>
-                <div class="card">
-                    <h3>Our Mission</h3>
-                    <p>We aim to create inclusive environments for everyone, regardless of ability.</p>
-                    <button>Learn More</button>
+            </div>
+            <div class="approach-services">
+                <div>
+                    <h2>Our Approach</h2>
+                    <p>Empower Ability Labs utilizes a hands-on approach...</p>
+                    <a href="https://www.google.com/search/howsearchworks/our-approach/">Learn more</a>
                 </div>
-                <div class="card">
-                    <h3>Get Involved</h3>
-                    <p>Participate in our events and workshops to make a difference.</p>
-                    <button>Learn More</button>
+                <div>
+                    <h2>Services</h2>
+                    <p>Promote accessibility awareness...</p>
+                    <a href="https://www.elevenways.be/en/services">Learn more</a>
+                </div>
+                <div>
+                    <h2>Testimonials</h2>
+                    <p>Invite a speaker with disabilities...</p>
+                    <a href="https://dictionary.cambridge.org/us/dictionary/english/testimonial">Learn more</a>
                 </div>
             </div>
         </section>
-
-        <section id="services" class="hidden" tabindex="-1">
-            <h2>Our Services</h2>
-            <p>We offer a range of services to support accessibility and inclusion:</p>
-            <ul>
-                <li>Accessibility consulting for events and workplaces.</li>
-                <li>Workshops and training on inclusive practices.</li>
-                <li>Usability testing with diverse groups.</li>
-            </ul>
+        <section id="services" class="content-section" aria-labelledby="services-heading" hidden>
+            <h1 id="services-heading">Services</h1>
+            <p>Dedicated space or programs designed to cultivate empathy...</p>
+            <h2>Empathy Lab days and workshops</h2>
+            <p>The lab days and workshops typically provide hands-on experiences...</p>
+            <h2>Inspirational speakers</h2>
+            <p>Invite a speaker with disabilities to share their unique journey...</p>
+            <h2>Usability testing</h2>
+            <p>Go beyond WCAG! Involve individuals with disabilities...</p>
         </section>
-
-        <section id="schedule" class="hidden" tabindex="-1">
-            <h2>Schedule a Call</h2>
-            <p>Once "Schedule a call" is activated, this area appears.</p>
-            <form id="scheduleForm" novalidate>
-                <div id="formMessage" role="alert"></div>
-                <label for="businessName">Business name:</label>
-                <input type="text" id="businessName" name="businessName">
-
-                <label for="phone">Phone number:</label>
-                <input type="tel" id="phone" name="phone" placeholder="(613)-123-1234">
-
-                <label for="email">Email (required):</label>
-                <input type="email" id="email" name="email" required aria-required="true">
-
+        <section id="schedule" class="content-section" aria-labelledby="schedule-heading" hidden>
+            <h1 id="schedule-heading">Schedule a Call</h1>
+            <p>At Empower Ability Labs, we are dedicated to cultivating empathy...</p>
+            <form id="schedule-form">
+                <label for="business-name">Business Name:</label>
+                <input type="text" id="business-name" name="business-name">
+                <label for="phone">Phone number (613-123-1234):</label>
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+                <label for="email">Email: (required)</label>
+                <input type="email" id="email" name="email" required>
                 <fieldset>
-                    <legend>What would you like to talk about?</legend>
-                    <label><input type="checkbox" name="topics" value="awareness"> Awareness lab days and workshops</label>
-                    <label><input type="checkbox" name="topics" value="speaker"> Invite a speaker with disabilities to your event</label>
-                    <label><input type="checkbox" name="topics" value="testing"> Usability testing</label>
+                    <legend>What would you like to talk about:</legend>
+                    <input type="checkbox" id="awareness" name="topic" value="awareness">
+                    <label for="awareness">Awareness lab days and workshops</label><br>
+                    <input type="checkbox" id="speaker" name="topic" value="speaker">
+                    <label for="speaker">Invite a speaker with disabilities to your event</label><br>
+                    <input type="checkbox" id="usability" name="topic" value="usability">
+                    <label for="usability">Usability testing</label>
                 </fieldset>
-
-                <button id="toggleEventDetailsBtn">Tell us about your event</button>
-                <div id="eventDetails" class="hidden">
-                    <label for="eventDetailsText">Tell us about your event:</label>
-                    <textarea id="eventDetailsText" name="eventDetails"></textarea>
+                <div id="event-details" hidden>
+                    <label for="event-text">Please tell us about your event</label>
+                    <textarea id="event-text" name="event-text"></textarea>
                 </div>
-
-                <label class="switch-label">
-                    <input type="checkbox" id="receiveEmails" name="receiveEmails">
-                    <span class="slider"></span>
-                    Receive emails about updates and services
-                </label>
-
-                <button type="submit">Schedule a call</button>
+                <div class="switch-container">
+                    <span id="switch-label">Receive emails about updates and services</span>
+                    <button role="switch" aria-checked="false" aria-labelledby="switch-label">
+                        <img src="images/switch-off.png" alt="Switch off">
+                    </button>
+                </div>
+                <button type="submit">Schedule a Call</button>
             </form>
+            <div id="form-message" aria-live="polite">
+                <img src="images/thumbs-up.png" alt="Thumbs up emoji for successful form submission" class="form-image" hidden>
+            </div>
         </section>
     </main>
-
-    <script src="script.js"></script>
+    <footer>
+        <p>© Copyright Empower Ability Labs Inc 2023. All rights reserved.</p>
+    </footer>
+    <script src="EmpowerAbilityLab.js"></script>
 </body>
 </html>
