@@ -1,68 +1,90 @@
+// EmpowerAbilityLab.js
 document.addEventListener('DOMContentLoaded', () => {
-    const navLinks = document.querySelectorAll('.navbar a');
-    const sections = document.querySelectorAll('section');
-    const toggleEventDetailsBtn = document.getElementById('toggleEventDetailsBtn');
-    const eventDetails = document.getElementById('eventDetails');
-    const scheduleForm = document.getElementById('scheduleForm');
-    const formMessage = document.getElementById('formMessage');
+    // Navigation and SPA functionality
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('.content-section');
 
-    // Navigation and Focus Management
+    function showSection(targetId) {
+        sections.forEach(section => {
+            section.hidden = section.id !== targetId;
+            section.setAttribute('aria-hidden', section.id !== targetId);
+        });
+        document.querySelector(`#${targetId}`).focus();
+        document.title = `Empower Ability Labs - ${targetId.charAt(0).toUpperCase() + targetId.slice(1)}`;
+    }
+
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const targetId = link.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
-
-            sections.forEach(section => section.classList.add('hidden'));
-            targetSection.classList.remove('hidden');
-            targetSection.focus();
-
-            navLinks.forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
-
-            document.title = `${link.textContent} | Empower Ability Labs`;
-            history.pushState({}, link.textContent, `#${targetId}`);
+            showSection(targetId);
+            window.history.pushState({ section: targetId }, '', `#${targetId}`);
         });
     });
 
-    // Browser Back Button Sync
-    window.addEventListener('popstate', () => {
-        const hash = window.location.hash.substring(1) || 'home';
-        const targetSection = document.getElementById(hash);
-        sections.forEach(section => section.classList.add('hidden'));
-        targetSection.classList.remove('hidden');
-        targetSection.focus();
+    window.addEventListener('popstate', (e) => {
+        const targetId = e.state?.section || 'home';
+        showSection(targetId);
+    });
 
-        navLinks.forEach(link => {
-            link.classList.toggle('active', link.getAttribute('href') === `#${hash}`);
-        });
-        document.title = `${document.querySelector('.active').textContent} | Empower Ability Labs`;
+    // Lightbox/Modal
+    const communityBtn = document.getElementById('community-btn');
+    const lightbox = document.getElementById('lightbox');
+    const closeBtn = document.getElementById('close-lightbox');
+
+    communityBtn.addEventListener('click', () => {
+        lightbox.hidden = false;
+        lightbox.setAttribute('aria-hidden', 'false');
+        closeBtn.focus();
+    });
+
+    closeBtn.addEventListener('click', () => {
+        lightbox.hidden = true;
+        lightbox.setAttribute('aria-hidden', 'true');
+        communityBtn.focus();
+    });
+
+    lightbox.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            closeBtn.focus();
+        }
+    });
+
+    // Switch
+    const switchBtn = document.querySelector('[role="switch"]');
+    switchBtn.addEventListener('click', () => {
+        const isChecked = switchBtn.getAttribute('aria-checked') === 'true';
+        switchBtn.setAttribute('aria-checked', !isChecked);
+        switchBtn.querySelector('img').src = isChecked ? 'images/switch-off.png' : 'images/switch-on.png';
     });
 
     // Show/Hide Event Details
-    toggleEventDetailsBtn.addEventListener('click', () => {
-        eventDetails.classList.toggle('hidden');
-        if (!eventDetails.classList.contains('hidden')) {
-            document.getElementById('eventDetailsText').focus();
-        }
+    const speakerCheckbox = document.getElementById('speaker');
+    const eventDetails = document.getElementById('event-details');
+
+    speakerCheckbox.addEventListener('change', () => {
+        eventDetails.hidden = !speakerCheckbox.checked;
+        eventDetails.setAttribute('aria-hidden', !speakerCheckbox.checked);
     });
 
-    // Form Submission and Validation
-    scheduleForm.addEventListener('submit', (e) => {
+    // Form Submission
+    const form = document.getElementById('schedule-form');
+    const message = document.getElementById('form-message');
+    const formImage = message.querySelector('.form-image');
+
+    form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const email = document.getElementById('email').value;
-
-        if (!email) {
-            formMessage.textContent = 'Error: Email is required.';
-            formMessage.style.color = '#ff4d4d';
-        } else if (!/^\S+@\S+\.\S+$/.test(email)) {
-            formMessage.textContent = 'Error: Please enter a valid email.';
-            formMessage.style.color = '#ff4d4d';
+        if (form.checkValidity()) {
+            message.textContent = 'Thank you! We’ll get back to you soon.';
+            formImage.hidden = false;
+            form.reset();
         } else {
-            formMessage.textContent = 'Thank you, your message has been sent!';
-            formMessage.style.color = '#28a745';
-            scheduleForm.reset();
-            eventDetails.classList.add('hidden');
+            message.textContent = 'Please fill out all required fields correctly.';
+            formImage.hidden = true;
         }
     });
+
+    // Initial state
+    showSection('home');
 });
